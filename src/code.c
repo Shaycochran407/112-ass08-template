@@ -160,28 +160,32 @@ bool append_pow_txt(const char *filename, double base, double exponent) {
  *    - Success requires that both writes AND the close worked.
  */
 // TODO
-    bool create_ceil_floor_txt(const char *filename, double value) {
+bool create_ceil_floor_txt(const char *filename, double value) {
     FILE *file = fopen(filename, "w");
-
-    if (file == NULL)
-    {
+    if (file == NULL) {
         return false;
     }
+
     double ceil_value = ceil(value);
     double floor_value = floor(value);
 
-    if (fprintf(file, "%.2f\n", ceil_value) < 0)
-    {
+    if (fprintf(file, "%.2f\n", ceil_value) < 0) {
         fclose(file);
         return false;
     }
-    if (fprintf(file, "%.2f\n", floor_value) < 0)
-    {
+
+    if (fprintf(file, "%.2f\n", floor_value) < 0) {
         fclose(file);
         return false;
     }
+
+    if (fclose(file) != 0) {
+        return false;
+    }
+
     return true;
 }
+
 
 /*
  * 6. append_round_txt (returns bool; parameters: filename, double value)
