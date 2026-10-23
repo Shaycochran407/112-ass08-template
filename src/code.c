@@ -624,7 +624,7 @@ bool load_bin_value_at(const char *filename, int index, double *out) {
  *     - Close the file and return the stored size.
  */
 // TODO
-bool get_file_size(const char *filename, long *size) {
+bool get_file_size(const char *filename, long *file_size) {
     FILE *file = fopen(filename, "rb");
 
     if (file == NULL)
@@ -650,6 +650,6 @@ bool get_file_size(const char *filename, long *size) {
         return false;
     }
 
-    *size = size;
+    *file_size = size;
     return true;
 }

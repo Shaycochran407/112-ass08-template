@@ -152,8 +152,7 @@ bool append_fmod_bin(const char *filename, double x, double y);
 bool load_abs_bin(const char *filename, int *value);
 int load_bin_values(const char *filename, double *values, int max_values);
 bool load_bin_value_at(const char *filename, int index, double *value);
-bool load_bin_value_at(const char *filename, int index, double *value);
-bool get_file_size(const char *filename, long *size);
+bool get_file_size(const char *filename, long *file_size);
 
 
  #endif
