@@ -90,7 +90,7 @@ bool create_fabs_txt(const char *filename, double value) {
     }
 
     return true;
-}b
+}
 /*
  * 3. append_sqrt_txt (returns bool; parameters: filename, double value)
  *    - Invalid input: negative value -> return false, do not touch the file.
