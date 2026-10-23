@@ -73,6 +73,9 @@
 #ifndef CODE_H 
 #define CODE_H
 #include <stdbool.h>
+#include <stdio.h>
+#include <math.h>
+#include <stdlib.h>
  bool create_abs_txt(const char *filename, int value);
  bool create_fabs_txt(const char *filename, double value);
  bool append_sqrt_txt(const char *filename, double value);

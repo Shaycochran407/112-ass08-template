@@ -624,31 +624,32 @@ bool load_bin_value_at(const char *filename, int index, double *out) {
  *     - Close the file and return the stored size.
  */
 // TODO
-long get_file_size(const char *filename) {
+bool get_file_size(const char *filename, long *size) {
     FILE *file = fopen(filename, "rb");
 
     if (file == NULL)
     {
-        return -1;
+        return false;
     }
 
     if (fseek(file, 0, SEEK_END) != 0)
     {
         fclose(file);
-        return -1;
+        return false;
     }
 
     long size = ftell(file);
     if (size == -1L)
     {
         fclose(file);
-        return -1;
+        return false;
     }
 
     if (fclose(file) != 0)
     {
-        return -1;
+        return false;
     }
 
-    return size;
+    *size = size;
+    return true;
 }
