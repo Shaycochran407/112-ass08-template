@@ -8,13 +8,13 @@
 
 /*
  * code.h - Assignment 8: File Access and Math Functions
- *
+ *#ifndef CODE_H #define CODE_H
  * TODO 1: Add the include guard at the TOP of this file.
  *         Check whether a macro named CODE_H is NOT defined yet,
  *         and if so, define it.
  *
  * TODO 2: Include the header that provides the `bool` type.
- *
+ * (<stdbool.h>)
  * TODO 3: Declare (write prototypes for) all 20 functions listed below.
  *         Every prototype ends with a semicolon.
  *         Use `const` for every string that the function only reads.
@@ -29,19 +29,23 @@
  * 1. create_abs_txt
  *    Returns: bool
  *    Parameters: the file name (read-only string), an int value
- *
+ *  bool create_abs_txt(const char *filename, int value);
+ * 
  * 2. create_fabs_txt
  *    Returns: bool
  *    Parameters: the file name (read-only string), a double value
- *
+ *  bool create_fabs_txt(const char *filename, double value);
+ * 
  * 3. append_sqrt_txt
  *    Returns: bool
  *    Parameters: the file name (read-only string), a double value
- *
+ *  bool append_sqrt_txt(const char *filename, double value);
+ * 
  * 4. append_pow_txt
  *    Returns: bool
  *    Parameters: the file name (read-only string), a double base, a double exponent
- *
+ *  bool append_pow_txt(const char *filename, double base, double exponet);
+ * 
  * 5. create_ceil_floor_txt
  *    Returns: bool
  *    Parameters: the file name (read-only string), a double value
@@ -66,7 +70,20 @@
  */
 
 /* TODO: write the prototypes for functions 1-9 here */
+#ifndef CODE_H 
+#define CODE_H
+#include <stdbool.h>
+ bool create_abs_txt(const char *filename, int value);
+ bool create_fabs_txt(const char *filename, double value);
+ bool append_sqrt_txt(const char *filename, double value);
+ bool append_pow_txt(const char *filename, double base, double exponent);
+ bool create_ceil_floor_txt(const char *filename, double value);
+ bool append_round_txt(const char *filename, double value);
+ bool append_fmod_txt(const char *filename, double x, double y);
+ int load_txt_values(const char *filename, double *values, int max_values);
+ bool clear_file(const char *filename);
 
+ 
 
 /* ========================= PART B: Binary mode ========================= */
 
@@ -122,6 +139,19 @@
  */
 
 /* TODO: write the prototypes for functions 10-20 here */
+bool create_abs_bin(const char *filename, int value);
+bool create_fabs_bin(const char *filename, double value);
+bool append_sqrt_bin(const char *filename, double value);
+bool append_pow_bin(const char *filename, double base, double exponet);
+bool create_ceil_floor_bin(const char *filename, double value);
+bool append_round_bin(const char *filename, double value);
+bool append_fmod_bin(const char *filename, double x, double y);
+bool load_abs_bin(const char *filename, int *value);
+int load_bin_values(const char *filename, double *values, int max_values);
+bool load_bin_value_at(const char *filename, int index, double *value);
+bool load_bin_value_at(const char *filename, int index, double *value);
+bool get_file_size(const char *filename, long *size);
 
 
+ #endif
 /* TODO: close the include guard here */
