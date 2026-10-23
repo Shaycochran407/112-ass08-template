@@ -72,7 +72,7 @@ bool create_abs_txt(const char *filename, int value) {
  *      use fabs() and write with exactly two digits after the decimal point.
  *    - Open mode: write (create / overwrite).
  *      Bool create_fabs_txt(const char *filename, double value) {
- 
+ */
 // TODO
 bool create_fabs_txt(const char *filename, double value) {
     FILE *file = fopen(filename, "w");
@@ -90,7 +90,7 @@ bool create_fabs_txt(const char *filename, double value) {
     }
 
     return true;
-}
+}b
 /*
  * 3. append_sqrt_txt (returns bool; parameters: filename, double value)
  *    - Invalid input: negative value -> return false, do not touch the file.
