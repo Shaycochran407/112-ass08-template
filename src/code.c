@@ -49,23 +49,29 @@
  */
 // TODO
 bool create_abs_txt(const char *filename, int value) {
-    FILE *file = fopen(filename, "w");
+    if (filename == NULL) {
+        return false;
+    }
 
-    if (file == NULL)
-    {
+    FILE *file = fopen(filename, "w");
+    if (file == NULL) {
         return false;
     }
 
     int abs_value = abs(value);
-    fprintf(file, "%d\n", abs_value);
 
-    if (fclose(file) != 0)
-    {
+    if (fprintf(file, "%d\n", abs_value) < 0) {
+        fclose(file);
+        return false;
+    }
+
+    if (fclose(file) != 0) {
         return false;
     }
 
     return true;
 }
+
 /*
  * 2. create_fabs_txt (returns bool; parameters: filename, double value)
  *    - Same idea as the previous function, but for a double:
@@ -75,17 +81,23 @@ bool create_abs_txt(const char *filename, int value) {
  */
 // TODO
 bool create_fabs_txt(const char *filename, double value) {
-    FILE *file = fopen(filename, "w");
-
-    if (file == NULL)
-    {
+    if (filename == NULL) {
         return false;
     }
-    double fabs_value = fabs(value);
-    fprintf(file, "%.2f\n", fabs_value);
 
-    if (fclose(file) != 0)
-    {
+    FILE *file = fopen(filename, "w");
+    if (file == NULL) {
+        return false;
+    }
+
+    double fabs_value = fabs(value);
+
+    if (fprintf(file, "%.2f\n", fabs_value) < 0) {
+        fclose(file);
+        return false;
+    }
+
+    if (fclose(file) != 0) {
         return false;
     }
 
@@ -100,23 +112,27 @@ bool create_fabs_txt(const char *filename, double value) {
  */
 // TODO
 bool append_sqrt_txt(const char *filename, double value) {
-    if (value < 0)
-    {
+    if (filename == NULL) {
+        return false;
+    }
+
+    if (value < 0) {
         return false;
     }
 
     FILE *file = fopen(filename, "a");
-
-    if (file == NULL)
-    {
+    if (file == NULL) {
         return false;
     }
 
     double sqrt_value = sqrt(value);
-    fprintf(file, "%.2f\n", sqrt_value);
 
-    if (fclose(file) != 0)
-    {
+    if (fprintf(file, "%.2f\n", sqrt_value) < 0) {
+        fclose(file);
+        return false;
+    }
+
+    if (fclose(file) != 0) {
         return false;
     }
 
@@ -131,22 +147,27 @@ bool append_sqrt_txt(const char *filename, double value) {
  */
 // TODO
 bool append_pow_txt(const char *filename, double base, double exponent) {
-    if (base == 0 && exponent < 0)
-    {
+    if (filename == NULL) {
+        return false;
+    }
+
+    if (base == 0 && exponent < 0) {
         return false;
     }
 
     FILE *file = fopen(filename, "a");
-
-    if (file == NULL)
-    {
+    if (file == NULL) {
         return false;
     }
-    double pow_value = pow(base, exponent);
-    fprintf(file, "%.2f\n", pow_value);
 
-    if (fclose(file) != 0)
-    {
+    double pow_value = pow(base, exponent);
+
+    if (fprintf(file, "%.2f\n", pow_value) < 0) {
+        fclose(file);
+        return false;
+    }
+
+    if (fclose(file) != 0) {
         return false;
     }
 
@@ -161,6 +182,10 @@ bool append_pow_txt(const char *filename, double base, double exponent) {
  */
 // TODO
 bool create_ceil_floor_txt(const char *filename, double value) {
+    if (filename == NULL) {
+        return false;
+    }
+
     FILE *file = fopen(filename, "w");
     if (file == NULL) {
         return false;
@@ -186,7 +211,6 @@ bool create_ceil_floor_txt(const char *filename, double value) {
     return true;
 }
 
-
 /*
  * 6. append_round_txt (returns bool; parameters: filename, double value)
  *    - Open in APPEND mode, write round(value) as a new line
@@ -195,17 +219,23 @@ bool create_ceil_floor_txt(const char *filename, double value) {
  */
 // TODO
 bool append_round_txt(const char *filename, double value) {
-    FILE *file = fopen(filename, "a");
-
-    if (file == NULL)
-    {
+    if (filename == NULL) {
         return false;
     }
-    double round_value = round(value);
-    fprintf(file, "%.2f\n", round_value);
 
-    if (fclose(file) != 0)
-    {
+    FILE *file = fopen(filename, "a");
+    if (file == NULL) {
+        return false;
+    }
+
+    double round_value = round(value);
+
+    if (fprintf(file, "%.2f\n", round_value) < 0) {
+        fclose(file);
+        return false;
+    }
+
+    if (fclose(file) != 0) {
         return false;
     }
 
@@ -219,22 +249,27 @@ bool append_round_txt(const char *filename, double value) {
  */
 // TODO
 bool append_fmod_txt(const char *filename, double x, double y) {
-    if (y == 0)
-    {
+    if (filename == NULL) {
+        return false;
+    }
+
+    if (y == 0) {
         return false;
     }
 
     FILE *file = fopen(filename, "a");
-
-    if (file == NULL)
-    {
+    if (file == NULL) {
         return false;
     }
-    double fmod_value = fmod(x, y);
-    fprintf(file, "%.2f\n", fmod_value);
 
-    if (fclose(file) != 0)
-    {
+    double fmod_value = fmod(x, y);
+
+    if (fprintf(file, "%.2f\n", fmod_value) < 0) {
+        fclose(file);
+        return false;
+    }
+
+    if (fclose(file) != 0) {
         return false;
     }
 
@@ -254,12 +289,14 @@ bool append_fmod_txt(const char *filename, double x, double y) {
  */
 // TODO
 int load_txt_values(const char *filename, double *values, int max_count) {
-    FILE *file = fopen(filename, "r");
-
-    if (file == NULL)
-    {
+    if (filename == NULL || values == NULL || max_count <= 0) {
         return -1;
-    }   
+    }
+
+    FILE *file = fopen(filename, "r");
+    if (file == NULL) {
+        return -1;
+    }
 
     int count = 0;
     while (count < max_count) {
@@ -268,9 +305,14 @@ int load_txt_values(const char *filename, double *values, int max_count) {
         }
         count++;
     }
-    fclose(file);
+
+    if (fclose(file) != 0) {
+        return -1;
+    }
+
     return count;
 }
+
 /*
  * 9. clear_file (returns bool; parameters: filename)
  *    - Think: which open mode removes all existing content
@@ -280,20 +322,22 @@ int load_txt_values(const char *filename, double *values, int max_count) {
  */
 // TODO
 bool clear_file(const char *filename) {
-    FILE *file = fopen(filename, "w");
-
-    if (file == NULL)
-    {
+    if (filename == NULL) {
         return false;
     }
 
-    if (fclose(file) != 0)
-    {
+    FILE *file = fopen(filename, "w");
+    if (file == NULL) {
+        return false;
+    }
+
+    if (fclose(file) != 0) {
         return false;
     }
 
     return true;
 }
+
 
 /* ========================= PART B: Binary mode ========================= */
 
@@ -307,23 +351,24 @@ bool clear_file(const char *filename) {
  */
 // TODO
 bool create_abs_bin(const char *filename, int value) {
-    FILE *file = fopen(filename, "wb");
+    if (filename == NULL) {
+        return false;
+    }
 
-    if (file == NULL)
-    {
+    FILE *file = fopen(filename, "wb");
+    if (file == NULL) {
         return false;
     }
 
     int result = abs(value);
     size_t written = fwrite(&result, sizeof(int), 1, file);
-    if (written != 1)
-    {
+
+    if (written != 1) {
         fclose(file);
         return false;
     }
 
-    if (fclose(file) != 0)
-    {
+    if (fclose(file) != 0) {
         return false;
     }
 
@@ -338,28 +383,30 @@ bool create_abs_bin(const char *filename, int value) {
  */
 // TODO
 bool create_fabs_bin(const char *filename, double value) {
-    FILE *file = fopen(filename, "wb");
-
-    if (file == NULL)
-    {
+    if (filename == NULL) {
         return false;
-    }   
+    }
+
+    FILE *file = fopen(filename, "wb");
+    if (file == NULL) {
+        return false;
+    }
 
     double result = fabs(value);
     size_t written = fwrite(&result, sizeof(double), 1, file);
-    if (written != 1)
-    {
+
+    if (written != 1) {
         fclose(file);
         return false;
     }
 
-    if (fclose(file) != 0)
-    {
+    if (fclose(file) != 0) {
         return false;
     }
 
     return true;
 }
+
 /*
  * 12. append_sqrt_bin (returns bool; parameters: filename, double value)
  *     - Invalid input: negative value -> return false BEFORE opening the file.
@@ -369,28 +416,28 @@ bool create_fabs_bin(const char *filename, double value) {
  */
 // TODO
 bool append_sqrt_bin(const char *filename, double value) {
-    if (value < 0)
-    {
+    if (filename == NULL) {
+        return false;
+    }
+
+    if (value < 0) {
         return false;
     }
 
     FILE *file = fopen(filename, "ab");
-
-    if (file == NULL)
-    {
+    if (file == NULL) {
         return false;
     }
 
     double result = sqrt(value);
     size_t written = fwrite(&result, sizeof(double), 1, file);
-    if (written != 1)
-    {
+
+    if (written != 1) {
         fclose(file);
         return false;
     }
 
-    if (fclose(file) != 0)
-    {
+    if (fclose(file) != 0) {
         return false;
     }
 
@@ -405,33 +452,34 @@ bool append_sqrt_bin(const char *filename, double value) {
  */
 // TODO
 bool append_pow_bin(const char *filename, double base, double exponent) {
-    if (base == 0 && exponent < 0)
-    {
+    if (filename == NULL) {
+        return false;
+    }
+
+    if (base == 0 && exponent < 0) {
         return false;
     }
 
     FILE *file = fopen(filename, "ab");
-
-    if (file == NULL)
-    {
+    if (file == NULL) {
         return false;
     }
 
     double result = pow(base, exponent);
     size_t written = fwrite(&result, sizeof(double), 1, file);
-    if (written != 1)
-    {
+
+    if (written != 1) {
         fclose(file);
         return false;
     }
 
-    if (fclose(file) != 0)
-    {
+    if (fclose(file) != 0) {
         return false;
     }
 
     return true;
 }
+
 /*
  * 14. create_ceil_floor_bin (returns bool; parameters: filename, double value)
  *     - Open in BINARY WRITE mode (create / overwrite).
@@ -443,23 +491,27 @@ bool append_pow_bin(const char *filename, double base, double exponent) {
  */
 // TODO
 bool create_ceil_floor_bin(const char *filename, double value) {
-    FILE *file = fopen(filename, "wb");
-
-    if (file == NULL)
-    {
+    if (filename == NULL) {
         return false;
     }
+
+    FILE *file = fopen(filename, "wb");
+    if (file == NULL) {
+        return false;
+    }
+
     double results[2] = {ceil(value), floor(value)};
     size_t written = fwrite(results, sizeof(double), 2, file);
-    if (written != 2)
-    {
+
+    if (written != 2) {
         fclose(file);
         return false;
     }
-    if (fclose(file) != 0)
-    {
+
+    if (fclose(file) != 0) {
         return false;
     }
+
     return true;
 }
 /*
@@ -470,23 +522,27 @@ bool create_ceil_floor_bin(const char *filename, double value) {
  */
 // TODO
 bool append_round_bin(const char *filename, double value) {
-    FILE *file = fopen(filename, "ab");
-
-    if (file == NULL)
-    {
+    if (filename == NULL) {
         return false;
     }
+
+    FILE *file = fopen(filename, "ab");
+    if (file == NULL) {
+        return false;
+    }
+
     double result = round(value);
     size_t written = fwrite(&result, sizeof(double), 1, file);
-    if (written != 1)
-    {
+
+    if (written != 1) {
         fclose(file);
         return false;
     }
-    if (fclose(file) != 0)
-    {
+
+    if (fclose(file) != 0) {
         return false;
     }
+
     return true;
 }
 /*
@@ -497,28 +553,31 @@ bool append_round_bin(const char *filename, double value) {
  */
 // TODO
 bool append_fmod_bin(const char *filename, double x, double y) {
-    if (y == 0)
-    {
+    if (filename == NULL) {
+        return false;
+    }
+
+    if (y == 0) {
         return false;
     }
 
     FILE *file = fopen(filename, "ab");
-
-    if (file == NULL)
-    {
+    if (file == NULL) {
         return false;
     }
+
     double result = fmod(x, y);
     size_t written = fwrite(&result, sizeof(double), 1, file);
-    if (written != 1)
-    {
+
+    if (written != 1) {
         fclose(file);
         return false;
     }
-    if (fclose(file) != 0)
-    {
+
+    if (fclose(file) != 0) {
         return false;
     }
+
     return true;
 }
 /*
@@ -532,16 +591,18 @@ bool append_fmod_bin(const char *filename, double x, double y) {
  */
 // TODO
 bool load_abs_bin(const char *filename, int *out) {
-    FILE *file = fopen(filename, "rb");
+    if (filename == NULL || out == NULL) {
+        return false;
+    }
 
-    if (file == NULL)
-    {
+    FILE *file = fopen(filename, "rb");
+    if (file == NULL) {
         return false;
     }
 
     size_t read = fread(out, sizeof(int), 1, file);
-    if (fclose(file) != 0)
-    {
+
+    if (fclose(file) != 0) {
         return false;
     }
 
@@ -559,10 +620,12 @@ bool load_abs_bin(const char *filename, int *out) {
  */
 // TODO
 int load_bin_values(const char *filename, double *values, int max_count) {
-    FILE *file = fopen(filename, "rb");
+    if (filename == NULL || values == NULL || max_count <= 0) {
+        return -1;
+    }
 
-    if (file == NULL)
-    {
+    FILE *file = fopen(filename, "rb");
+    if (file == NULL) {
         return -1;
     }
 
@@ -574,7 +637,11 @@ int load_bin_values(const char *filename, double *values, int max_count) {
         }
         count++;
     }
-    fclose(file);
+
+    if (fclose(file) != 0) {
+        return -1;
+    }
+
     return count;
 }
 /*
@@ -591,28 +658,29 @@ int load_bin_values(const char *filename, double *values, int max_count) {
  */
 // TODO
 bool load_bin_value_at(const char *filename, int index, double *out) {
-    if (index < 0)
-    {
+    if (filename == NULL || out == NULL) {
+        return false;
+    }
+
+    if (index < 0) {
         return false;
     }
 
     FILE *file = fopen(filename, "rb");
-
-    if (file == NULL)
-    {
+    if (file == NULL) {
         return false;
     }
 
     long offset = (long)index * sizeof(double);
-    if (fseek(file, offset, SEEK_SET) != 0)
-    {
+
+    if (fseek(file, offset, SEEK_SET) != 0) {
         fclose(file);
         return false;
     }
 
     size_t read = fread(out, sizeof(double), 1, file);
-    if (fclose(file) != 0)
-    {
+
+    if (fclose(file) != 0) {
         return false;
     }
 
@@ -629,28 +697,27 @@ bool load_bin_value_at(const char *filename, int index, double *out) {
  */
 // TODO
 bool get_file_size(const char *filename, long *file_size) {
-    FILE *file = fopen(filename, "rb");
-
-    if (file == NULL)
-    {
+    if (filename == NULL || file_size == NULL) {
         return false;
     }
 
-    if (fseek(file, 0, SEEK_END) != 0)
-    {
+    FILE *file = fopen(filename, "rb");
+    if (file == NULL) {
+        return false;
+    }
+
+    if (fseek(file, 0, SEEK_END) != 0) {
         fclose(file);
         return false;
     }
 
     long size = ftell(file);
-    if (size == -1L)
-    {
+    if (size == -1L) {
         fclose(file);
         return false;
     }
 
-    if (fclose(file) != 0)
-    {
+    if (fclose(file) != 0) {
         return false;
     }
 
